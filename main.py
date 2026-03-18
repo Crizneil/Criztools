@@ -172,6 +172,34 @@ class ProjectArchitect:
         except Exception as e:
             print(f"[-] Architect error: {e}")
 
+class WindowsTools:
+    @staticmethod
+    def flush_dns():
+        print("[*] Flushing DNS Cache...")
+        subprocess.run(["ipconfig", "/flushdns"])
+    
+    @staticmethod
+    def clean_temp():
+        print("[*] Cleaning Windows Temporary Files...")
+        temp_dir = os.environ.get('TEMP')
+        if temp_dir:
+            try:
+                subprocess.run(['del', '/q/f/s', f'{temp_dir}\\*'], shell=True, stderr=subprocess.DEVNULL)
+                print("[+] Temp files cleared.")
+            except:
+                print("[-] Failed to clear some temp files (they might be in use).")
+                
+    @staticmethod
+    def ping_test():
+        print("[*] Pinging 8.8.8.8 for network stability...")
+        subprocess.run(["ping", "8.8.8.8"])
+        
+    @staticmethod
+    def update_apps():
+        print("[*] Checking for App Updates via Winget...")
+        subprocess.run(["winget", "upgrade"])
+        print("\n[!] To install all updates, run: winget upgrade --all")
+
 class TerminalUI:
     def __init__(self):
         self.console = Console()
@@ -198,19 +226,38 @@ class TerminalUI:
             self.console.print(self.banner)
             self.console.print(self.get_system_monitor())
             
-            self.console.print("\n[1] DAILY PULSE")
-            self.console.print("[2] NETWORK SYNC")
-            self.console.print("[3] GIT CENTER")
-            self.console.print("[4] PROJECT ARCHITECT")
+            self.console.print("\n[1] [bold cyan]GITHUB TOOLS[/bold cyan]")
+            self.console.print("[2] [bold yellow]WINDOWS TOOLS[/bold yellow]")
             self.console.print("[0] EXIT\n")
             
             choice = input("CRIZ@OMNI:~$ ").strip()
 
             if choice == "1":
-                manager.pulse_heartbeat()
+                self.github_menu(manager)
             elif choice == "2":
+                self.windows_menu()
+            elif choice == "0":
+                print("STATION OFFLINE.")
+                break
+
+    def github_menu(self, manager):
+        while True:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            self.console.print(self.banner)
+            self.console.print("\n--- [bold cyan]GITHUB TOOLS[/bold cyan] ---")
+            self.console.print("[1] DAILY PULSE")
+            self.console.print("[2] NETWORK SYNC")
+            self.console.print("[3] GIT CENTER")
+            self.console.print("[4] PROJECT ARCHITECT")
+            self.console.print("[0] BACK TO MAIN\n")
+            
+            gh_choice = input("GITHUB@OMNI:~$ ").strip()
+            
+            if gh_choice == "1":
+                manager.pulse_heartbeat()
+            elif gh_choice == "2":
                 manager.network_sync()
-            elif choice == "3":
+            elif gh_choice == "3":
                 print("\n[1] QUICK PUSH\n[2] FRIEND SYNC\n[0] BACK")
                 git_choice = input("GIT@OMNI:~$ ").strip()
                 if git_choice == "1":
@@ -219,13 +266,39 @@ class TerminalUI:
                     GitCenter.friend_sync()
                 elif git_choice == "0":
                     continue
-            elif choice == "4":
+            elif gh_choice == "4":
                 ProjectArchitect.initialize()
-            elif choice == "0":
-                print("STATION OFFLINE.")
+            elif gh_choice == "0":
                 break
+                
+            if gh_choice in ["1", "2", "3", "4"]:
+                input("\nPress ENTER to continue...")
+
+    def windows_menu(self):
+        while True:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            self.console.print(self.banner)
+            self.console.print("\n--- [bold yellow]WINDOWS TOOLS[/bold yellow] ---")
+            self.console.print("[1] NETWORK PING TEST")
+            self.console.print("[2] FLUSH DNS")
+            self.console.print("[3] SYSTEM CLEAN-UP (TEMP)")
+            self.console.print("[4] WINGET APP UPDATER")
+            self.console.print("[0] BACK TO MAIN\n")
             
-            if choice in ["1", "2", "3", "4"]:
+            win_choice = input("WINDOWS@OMNI:~$ ").strip()
+            
+            if win_choice == "1":
+                WindowsTools.ping_test()
+            elif win_choice == "2":
+                WindowsTools.flush_dns()
+            elif win_choice == "3":
+                WindowsTools.clean_temp()
+            elif win_choice == "4":
+                WindowsTools.update_apps()
+            elif win_choice == "0":
+                break
+                
+            if win_choice in ["1", "2", "3", "4"]:
                 input("\nPress ENTER to continue...")
 
 def main():
