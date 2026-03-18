@@ -24,7 +24,7 @@ Write-Host "[+] Dependencies installed." -ForegroundColor Cyan
 
 # Always force download the absolute newest main.py update
 Write-Host "[*] Syncing latest main.py core from GitHub..." -ForegroundColor Yellow
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Crizneil/gh-criz-omni-tool/main/main.py" -OutFile "main.py" -UseBasicParsing
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Crizneil/criztools/main/main.py" -OutFile "main.py" -UseBasicParsing
 
 Write-Host "[*] Launching CRIZ TOOLS..." -ForegroundColor Green
 python main.py
