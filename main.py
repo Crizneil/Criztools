@@ -30,15 +30,17 @@ logger = logging.getLogger("rich")
 class GitHubManager:
     def __init__(self, token=None):
         self.token = token or os.getenv("GH_TOKEN")
-        if not self.token:
-            self.token = self.auto_auth()
-        
         try:
-            self.gh = Github(self.token)
-            self.user = self.gh.get_user()
-            logger.info(f"AUTH SUCCESS: Connected as {self.user.login}")
+            if self.token:
+                self.gh = Github(self.token)
+                self.user = self.gh.get_user()
+                logger.info(f"AUTH SUCCESS: Connected as {self.user.login}")
+            else:
+                self.gh = Github() # Unauthenticated read-only client
+                self.user = None
+                logger.info("SYSTEM READY: Running in Fast Local Mode")
         except Exception as e:
-            logger.error(f"AUTH FAILED: {e}")
+            logger.error(f"SYSTEM ERROR: {e}")
             sys.exit(1)
 
     def auto_auth(self):
@@ -74,6 +76,12 @@ class GitHubManager:
 
     def network_sync(self):
         """[2] Network Sync: Follow and Unfollow"""
+        if not self.user:
+            print("\n[!] SECURITY: This feature requires GitHub Authentication.")
+            self.token = self.auto_auth()
+            self.gh = Github(self.token)
+            self.user = self.gh.get_user()
+            
         # Follow logic
         keyword = 'Laravel Philippines'
         logger.info(f"SYNC: Searching users in '{keyword}'...")
