@@ -167,10 +167,12 @@ class TerminalUI:
     def __init__(self):
         self.console = Console()
         self.banner = """
-[bold green]
-┌──(criz㉿pisces)-[~]
-└─$ GH CRIZ 💨💨💨
-[/bold green]
+[bold red]  ██████╗ ██╗  ██╗   [/bold red][bold green]  ██████╗██████╗ ██╗███████╗ [/bold green] [bold yellow]••• 💨[/bold yellow]
+[bold red] ██╔════╝ ██║  ██║   [/bold red][bold green] ██╔════╝██╔══██╗██║╚══███╔╝ [/bold green] [bold yellow]••• 💨[/bold yellow]
+[bold red] ██║  ███╗███████║   [/bold red][bold green] ██║     ██████╔╝██║  ███╔╝  [/bold green] [bold yellow]••• 💨[/bold yellow]
+[bold red] ██║   ██║██╔══██║   [/bold red][bold green] ██║     ██╔══██╗██║ ███╔╝   [/bold green] [bold yellow]••• 💨[/bold yellow]
+[bold red] ╚██████╔╝██║  ██║   [/bold red][bold green] ╚██████╗██║  ██║██║███████╗ [/bold green] [bold yellow]••• 💨[/bold yellow]
+[bold red]  ╚═════╝ ╚═╝  ╚═╝   [/bold red][bold green]  ╚═════╝╚═╝  ╚═╝╚═╝╚══════╝ [/bold green]
         """
 
     def get_system_monitor(self):
