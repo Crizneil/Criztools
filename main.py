@@ -130,12 +130,13 @@ class GitCenter:
 
     @staticmethod
     def friend_sync():
-        """[3] Git: Friend Sync"""
+        """[3] Git: Friend Sync (Force Update)"""
         try:
             branch = input("Branch to sync: ").strip() or "main"
-            subprocess.run(["git", "fetch"], check=True)
-            subprocess.run(["git", "merge", f"origin/{branch}"], check=True)
-            print(f"[+] Synced with origin/{branch}")
+            subprocess.run(["git", "fetch", "origin", branch], check=True)
+            # Hard reset ensures it flawlessly grabs the latest update even if local files exist
+            subprocess.run(["git", "reset", "--hard", f"origin/{branch}"], check=True)
+            print(f"[+] FORCE SYNC SUCCESS: Updated to latest origin/{branch}")
         except subprocess.CalledProcessError as e:
             print(f"[-] Sync error: {e}")
 
