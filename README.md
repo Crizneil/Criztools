@@ -7,7 +7,7 @@
   ╚═════╝╚═╝  ╚═╝╚═╝╚══════╝       ╚═╝   ╚═════╝  ╚═════╝ ╚══════╝╚══════╝
 ```
 
-Professional, minimalist GitHub management tools
+Professional, minimalist GitHub / Windows management tools
 
 ## Quick Deploy
 
