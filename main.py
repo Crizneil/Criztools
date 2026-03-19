@@ -6,6 +6,10 @@ import psutil
 from rich.console import Console
 from rich.panel import Panel
 from rich.text import Text
+try:
+    import pyperclip
+except ImportError:
+    pyperclip = None
 
 class GitCenter:
     @staticmethod
@@ -34,7 +38,27 @@ class GitCenter:
     @staticmethod
     def clone_repo():
         print("[*] Clone an existing GitHub repository to your PC")
-        repo_url = input("Enter the GitHub repository URL: ").strip()
+        
+        # Clipboard Detection Feature
+        clipboard_content = ""
+        if pyperclip:
+            try:
+                clipboard_content = pyperclip.paste().strip()
+            except:
+                pass
+        
+        suggested_url = ""
+        if clipboard_content.startswith("https://github.com/"):
+            suggested_url = clipboard_content
+            print(f"[!] Detected GitHub URL in clipboard: {suggested_url}")
+            use_clipboard = input("Do you want to use this URL? (y/n, default: y): ").strip().lower()
+            if use_clipboard in ["y", "yes", ""]:
+                repo_url = suggested_url
+            else:
+                repo_url = input("Enter the GitHub repository URL: ").strip()
+        else:
+            repo_url = input("Enter the GitHub repository URL: ").strip()
+
         if repo_url:
             try:
                 subprocess.run(["git", "clone", repo_url], check=True)
