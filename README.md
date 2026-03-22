@@ -18,17 +18,28 @@ iwr -useb https://raw.githubusercontent.com/Crizneil/gh-criz-omni-tool/main/inst
 ```
 
 ## Core Features
-1. **GitHub Tools Center**:
+1. **Personal Tools (Social & Streak)**:
+   - **Auto GitHub Streak**: Automated daily commits to keep your graph green.
+   - **Auto Follow**: Find and follow users based on your search queries.
+   - **Auto Unfollow**: Clean up your profile by unfollowing those who don't follow back.
+2. **GitHub Tools Center**:
    - Project Architect (Auto-creates new repo folder, README, & License)
    - Git Quick Push (Auto-adds all files, asks for commit message, and pushes)
    - Git Pull Updates (Force-downloads the newest code from GitHub)
    - Git Clone Repo (Downloads an existing GitHub project to your PC)
-2. **Windows Tools**:
+3. **Windows Tools**:
    - Network Ping Test (Checks internet stability)
    - Flush DNS (Fixes internet routing issues)
    - System Clean-Up (Deletes junk %temp% files to save space)
    - Winget App Updater (Checks for software updates)
-3. **Live System Monitor**: Real-time stats for CPU, RAM, and Disk directly in your terminal.
+4. **Live System Monitor**: Real-time stats for CPU, RAM, and Disk directly in your terminal.
+
+## 🛠️ Setup
+1. **GitHub Token**: Add `GITHUB_TOKEN="your_token"` or `GH_TOKEN="your_token"` to a `.env` file in the project root.
+2. **Python Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ## 📜 License
 
