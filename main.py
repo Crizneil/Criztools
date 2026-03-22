@@ -590,6 +590,15 @@ class TelegramBotListener:
         thread.start()
 
     def poll(self):
+        # Clear backlog: Get the latest update ID and skip everything before it
+        try:
+            url = f"https://api.telegram.org/bot{self.token}/getUpdates"
+            response = requests.get(url, params={"offset": -1, "timeout": 1}, timeout=5).json()
+            if response.get("ok") and response.get("result"):
+                self.last_update_id = response["result"][0]["update_id"]
+        except Exception:
+            pass
+
         while self.running:
             try:
                 url = f"https://api.telegram.org/bot{self.token}/getUpdates"
