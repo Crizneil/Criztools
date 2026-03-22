@@ -11,7 +11,13 @@ if (!(Get-Command python -ErrorAction SilentlyContinue)) {
 
 Write-Host "[+] Python detected." -ForegroundColor Cyan
 
-# Install requirements
+# Check for Git Repository
+if (!(Test-Path ".git")) {
+    Write-Host "[!] WARNING: You are NOT in a Git repository." -ForegroundColor Yellow
+    Write-Host "[!] The Auto-Streak and Push tools will not work until you run 'git init' or move this script into a repository." -ForegroundColor Yellow
+    $confirm = Read-Host "Do you want to continue anyway? (y/n)"
+    if ($confirm -ne 'y') { exit 0 }
+}
 Write-Host "[*] Installing dependencies..." -ForegroundColor Yellow
 python -m pip install PyGithub rich psutil python-dotenv pyperclip --quiet
 

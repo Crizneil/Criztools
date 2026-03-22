@@ -7,7 +7,7 @@ from datetime import datetime
 from rich.console import Console
 from rich.panel import Panel
 from rich.text import Text
-from github import Github
+from github import Auth, Github
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -112,6 +112,14 @@ class ProjectArchitect:
 class PersonalTools:
     @staticmethod
     def github_streak():
+        # Check if in a git repository
+        try:
+            subprocess.run(["git", "rev-parse", "--is-inside-work-tree"], check=True, capture_output=True, text=True)
+        except subprocess.CalledProcessError:
+            print("[-] Streak Error: You are not inside a Git repository.")
+            print("[!] Please move this tool to a Git repo folder or run 'git init' first.")
+            return
+
         print("[*] Triggering Daily Streak Commit...")
         streak_dir = "streak"
         streak_file = os.path.join(streak_dir, "contribute.txt")
@@ -156,7 +164,8 @@ class PersonalTools:
             print("[-] Error: GITHUB_TOKEN or GH_TOKEN not found in .env file.")
             print("[!] Please add GITHUB_TOKEN=your_token_here to your .env file.")
             return None
-        return Github(token)
+        auth = Auth.Token(token)
+        return Github(auth=auth)
 
     @staticmethod
     def auto_follow():
